@@ -11,7 +11,7 @@ using UserService;
 using UserService.Application;
 using UserService.Commands;
 
-namespace Demo.Controllers
+namespace OwinApi.Controllers
 {
     [RoutePrefix("v0/users")]
     public class UsersController : ApiController

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2024
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo", "Demo\Demo.csproj", "{28BDE736-1146-4FD8-92E7-DD133DC68FB6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwinApi", "Demo\OwinApi.csproj", "{28BDE736-1146-4FD8-92E7-DD133DC68FB6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ServiceLayer", "ServiceLayer", "{98EC427F-063D-4E8A-A870-E200C87B693B}"
 EndProject

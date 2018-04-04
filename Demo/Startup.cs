@@ -11,9 +11,9 @@ using Newtonsoft.Json.Serialization;
 using Owin;
 using UserService.Commands;
 
-[assembly: OwinStartup(typeof(Demo.Startup))]
+[assembly: OwinStartup(typeof(OwinApi.Startup))]
 
-namespace Demo
+namespace OwinApi
 {
     public class Startup
     {
