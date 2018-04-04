@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ServiceLayer", "ServiceLaye
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService", "UserService\UserService.csproj", "{2FE3C900-15D0-4E71-8130-1A5C8465CD5C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PresentationLayer", "PresentationLayer", "{6BAFCF0A-6114-47A1-B3B9-6D64C34737FA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,6 +30,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{28BDE736-1146-4FD8-92E7-DD133DC68FB6} = {6BAFCF0A-6114-47A1-B3B9-6D64C34737FA}
 		{2FE3C900-15D0-4E71-8130-1A5C8465CD5C} = {98EC427F-063D-4E8A-A870-E200C87B693B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
