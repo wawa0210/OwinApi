@@ -12,8 +12,17 @@ namespace UserService.Application
 
     public class UserService : IUserService
     {
+        private readonly ILoggerService LogerService;
+
+        public UserService(ILoggerService _logerService)
+        {
+            LogerService = _logerService;
+        }
+
         public async Task<List<EntityUsers>> GetUsersListAsync()
         {
+            LogerService.WriteLog();
+
             var result = new List<EntityUsers>
             {
                 new EntityUsers

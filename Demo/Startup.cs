@@ -1,13 +1,15 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Reflection;
-using System.Threading.Tasks;
 using System.Web.Http;
 using Autofac;
 using Autofac.Integration.WebApi;
+using MediatR;
+using MediatR.Pipeline;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
 using Newtonsoft.Json.Serialization;
 using Owin;
+using UserService.Commands;
 
 [assembly: OwinStartup(typeof(Demo.Startup))]
 
@@ -26,7 +28,7 @@ namespace Demo
             var builder = new ContainerBuilder();
             SetupResolveRules(builder);
             // Register Web API controller in executing assembly.
-            builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
+            builder.RegisterApiControllers(Assembly.GetExecutingAssembly()).PropertiesAutowired();
 
             // OPTIONAL - Register the filter provider if you have custom filters that need DI.
             // Also hook the filters up to controllers.
@@ -50,7 +52,41 @@ namespace Demo
             var descriptorsBuiness = Assembly.Load("UserService");
             builder.RegisterAssemblyTypes(descriptorsBuiness)
                 .Where(t => t.Name.EndsWith("Service") && !t.IsAbstract)
-                .AsImplementedInterfaces().InstancePerLifetimeScope();
+                .AsImplementedInterfaces().InstancePerLifetimeScope().PropertiesAutowired();
+
+            builder.RegisterAssemblyTypes(typeof(IMediator).GetTypeInfo().Assembly)
+                .AsImplementedInterfaces().PropertiesAutowired();
+
+
+            var mediatrOpenTypes = new[]
+          {
+                typeof(IRequestHandler<,>),
+                typeof(IRequestHandler<>),
+                typeof(INotificationHandler<>),
+            };
+
+            foreach (var mediatrOpenType in mediatrOpenTypes)
+            {
+                builder
+                    .RegisterAssemblyTypes(typeof(ChangeUserNameCommand).GetTypeInfo().Assembly)
+                    .AsClosedTypesOf(mediatrOpenType)
+                    .AsImplementedInterfaces();
+            }
+
+            builder.RegisterGeneric(typeof(RequestPostProcessorBehavior<,>)).As(typeof(IPipelineBehavior<,>));
+            builder.RegisterGeneric(typeof(RequestPreProcessorBehavior<,>)).As(typeof(IPipelineBehavior<,>));
+
+            builder.Register<SingleInstanceFactory>(ctx =>
+            {
+                var c = ctx.Resolve<IComponentContext>();
+                return t => c.Resolve(t);
+            });
+
+            builder.Register<MultiInstanceFactory>(ctx =>
+            {
+                var c = ctx.Resolve<IComponentContext>();
+                return t => (IEnumerable<object>)c.Resolve(typeof(IEnumerable<>).MakeGenericType(t));
+            });
         }
 
     }
